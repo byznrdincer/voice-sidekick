@@ -1,0 +1,32 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	model(model)
+	tools(tools)
+	TodoListMiddleware\2eafter_model(TodoListMiddleware.after_model)
+	PIIMiddleware\5bemail\5d\2ebefore_model(PIIMiddleware[email].before_model)
+	PIIMiddleware\5bemail\5d\2eafter_model(PIIMiddleware[email].after_model)
+	ModelCallLimitMiddleware\2ebefore_model(ModelCallLimitMiddleware.before_model)
+	ModelCallLimitMiddleware\2eafter_model(ModelCallLimitMiddleware.after_model)
+	HumanInTheLoopMiddleware\2eafter_model(HumanInTheLoopMiddleware.after_model)
+	__end__([<p>__end__</p>]):::last
+	HumanInTheLoopMiddleware\2eafter_model --> ModelCallLimitMiddleware\2eafter_model;
+	ModelCallLimitMiddleware\2eafter_model --> PIIMiddleware\5bemail\5d\2eafter_model;
+	ModelCallLimitMiddleware\2ebefore_model -.-> __end__;
+	ModelCallLimitMiddleware\2ebefore_model -.-> model;
+	PIIMiddleware\5bemail\5d\2eafter_model --> TodoListMiddleware\2eafter_model;
+	PIIMiddleware\5bemail\5d\2ebefore_model -.-> ModelCallLimitMiddleware\2ebefore_model;
+	PIIMiddleware\5bemail\5d\2ebefore_model -.-> __end__;
+	TodoListMiddleware\2eafter_model -.-> PIIMiddleware\5bemail\5d\2ebefore_model;
+	TodoListMiddleware\2eafter_model -.-> __end__;
+	TodoListMiddleware\2eafter_model -.-> tools;
+	__start__ --> PIIMiddleware\5bemail\5d\2ebefore_model;
+	model --> HumanInTheLoopMiddleware\2eafter_model;
+	tools -.-> PIIMiddleware\5bemail\5d\2ebefore_model;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
